@@ -8,4 +8,12 @@
     <string name="password_hint">Password</string>
 
     <string name="sign_in_text_view">Don\'t have an account? Sign in now!</string>
+
+    <string name="sign_up_succ_toast">Sign up successful!</string>
+    <string name="sign_up_fail_toast">Sign up failed!</string>
+
+    <string name="log_in_succ_toast">Log in successful!</string>
+    <string name="log_in_fail_toast">Log in failed!</string>
+
+    <string name="log_out_menu_item">Log Out</string>
 </resources>

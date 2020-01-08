@@ -22,7 +22,7 @@
         app:srcCompat="@drawable/logo" />
 
     <EditText
-        android:id="@+id/signInUserEditText"
+        android:id="@+id/signUpUserEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -44,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/appNameTextView" />
 
     <EditText
-        android:id="@+id/signInPassEditText"
+        android:id="@+id/signUpPassEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -62,7 +62,7 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signInUserEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/signUpUserEditText" />
 
     <Button
         android:id="@+id/button"
@@ -77,7 +77,7 @@
         android:textColor="@color/colorAccent"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signInPassEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/signUpPassEditText" />
 
     <TextView
         android:id="@+id/appNameTextView"
