@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">WhatsApp</string>
+
+    <string name="log_in_btn">Log In</string>
+    <string name="sign_up_btn">Sign Up</string>
+
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+
+    <string name="sign_in_text_view">Don\'t have an account? Sign in now!</string>
+</resources>
