@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -17,7 +18,9 @@ import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnKeyListener {
+
+    private EditText passEdtTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.backgroundConLayout).setOnClickListener(this);
         findViewById(R.id.logoImageView).setOnClickListener(this);
         findViewById(R.id.appNameTextView).setOnClickListener(this);
+
+        passEdtTxt = findViewById(R.id.logInPassEditText);
+        passEdtTxt.setOnKeyListener(this);
     }
 
     public static void goToActivity(Activity thisActivity, Class<?> destination) {
@@ -50,21 +56,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void attemptToLogIn(View view) {
         final EditText userEdtTxt = findViewById(R.id.logInUserEditText);
-        final EditText passEdtTxt = findViewById(R.id.logInPassEditText);
 
         ParseUser.logInInBackground(userEdtTxt.getText().toString(), passEdtTxt.getText().toString(), new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
                 if (user != null) {
-                    Toast.makeText(getApplicationContext(), R.string.log_in_succ_toast, Toast.LENGTH_LONG).show();
-                    goToActivity(MainActivity.this, UsersActivity.class);
+                    if (user.get("app").equals("whatsapp")) {
+                        goToActivity(MainActivity.this, UsersActivity.class);
 
-                    userEdtTxt.setText("");
-                    passEdtTxt.setText("");
+                        userEdtTxt.setText("");
+                        passEdtTxt.setText("");
 
-                    finish();
+                        finish();
+                    } else {
+                        Toast.makeText(MainActivity.this, R.string.wrong_app_toast, Toast.LENGTH_LONG).show();
+                    }
                 } else {
+                    new ParseDebugger().sendExceptionData(e);
                     Toast.makeText(MainActivity.this, R.string.log_in_fail_toast, Toast.LENGTH_LONG).show();
+                    ParseUser.logOut();
                 }
             }
         });
@@ -85,5 +95,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+            attemptToLogIn(null);
+        }
+
+        return false;
     }
 }

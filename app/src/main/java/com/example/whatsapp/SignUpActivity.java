@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -15,7 +16,9 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
-public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
+public class SignUpActivity extends AppCompatActivity implements View.OnClickListener, View.OnKeyListener {
+
+    private EditText passEdtTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +32,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         findViewById(R.id.backgroundConLayout).setOnClickListener(this);
         findViewById(R.id.logoImageView).setOnClickListener(this);
         findViewById(R.id.appNameTextView).setOnClickListener(this);
+
+        passEdtTxt = findViewById(R.id.signUpPassEditText);
+        passEdtTxt.setOnKeyListener(this);
     }
 
     public void attemptToSignUp(View view) {
         EditText userEdtTxt = findViewById(R.id.signUpUserEditText);
-        EditText passEdtTxt = findViewById(R.id.signUpPassEditText);
 
         ParseUser userToSignUp = new ParseUser();
         userToSignUp.setUsername(userEdtTxt.getText().toString());
@@ -48,6 +53,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     MainActivity.goToActivity(SignUpActivity.this, UsersActivity.class);
                     finish();
                 } else {
+                    new ParseDebugger().sendExceptionData(e);
                     Toast.makeText(SignUpActivity.this, R.string.sign_up_fail_toast, Toast.LENGTH_LONG).show();
                 }
             }
@@ -64,6 +70,15 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             }
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+            attemptToSignUp(null);
+        }
+
+        return false;
     }
 
     @Override

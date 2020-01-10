@@ -15,7 +15,10 @@ public class ServerStarter extends Application {
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);
 
-//        ParseObject.registerSubclass(null);
+        ParseObject.registerSubclass(Chat.class);
+        ParseObject.registerSubclass(Message.class);
+        ParseObject.registerSubclass(ParseDebugger.class);
+        ParseObject.registerSubclass(Example.class);
 
         // Add your initialization code here
         Parse.initialize(new Parse.Configuration.Builder(getApplicationContext())

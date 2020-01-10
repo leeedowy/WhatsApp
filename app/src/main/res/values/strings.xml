@@ -12,8 +12,17 @@
     <string name="sign_up_succ_toast">Sign up successful!</string>
     <string name="sign_up_fail_toast">Sign up failed!</string>
 
-    <string name="log_in_succ_toast">Log in successful!</string>
     <string name="log_in_fail_toast">Log in failed!</string>
 
+    <string name="get_chat_fail_toast">Failed getting the chat!</string>
+
+    <string name="send_message_fail_toast">Sending message failed!</string>
+
+    <string name="wrong_app_toast">Wrong app!</string>
+
     <string name="log_out_menu_item">Log Out</string>
+
+    <string name="type_message_hint">Type a message</string>
+
+    <string name="no_messages_text_view">This chat is empty &#128532;</string>
 </resources>
