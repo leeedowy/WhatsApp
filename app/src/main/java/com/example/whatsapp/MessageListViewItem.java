@@ -7,10 +7,12 @@ public class MessageListViewItem {
 
     private String content;
     private int index;
+    private String key;
 
-    public MessageListViewItem(Object content, int index) {
-        this.content = (String) content;
+    public MessageListViewItem(String content, int index, String key) {
+        this.content = content;
         this.index = index;
+        this.key = key;
     }
 
     @NonNull
@@ -24,7 +26,15 @@ public class MessageListViewItem {
         return content.equals(obj);
     }
 
+    public String getContent() {
+        return content;
+    }
+
     public int getIndex() {
         return index;
+    }
+
+    public String getKey() {
+        return key;
     }
 }

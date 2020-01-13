@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        android:layout_gravity="start"
         android:layout_margin="10dp"
         android:background="@drawable/message_background"
-        android:gravity="end"
+        android:gravity="start"
         android:orientation="vertical"
         android:padding="6dp">
 
@@ -19,20 +20,20 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:fontFamily="@font/roboto_light"
-            android:gravity="end"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at eros ac nunc dictum pharetra ac et enim. Orci varius."
-            android:textColor="@color/colorAccent" />
+            android:gravity="start"
+            android:textColor="@color/colorAccent"
+            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at eros ac nunc dictum pharetra ac et enim. Orci varius." />
 
         <TextView
-            android:id="@+id/authorTextView"
+            android:id="@+id/authorAndSentAtTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
             android:layout_margin="5dp"
             android:fontFamily="@font/roboto_thinitalic"
-            android:gravity="end"
-            android:text="Cicero"
             android:textColor="@color/colorAccent"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="Cicero, Yesterday 18:43" />
 
 
     </LinearLayout>

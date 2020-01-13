@@ -1,8 +1,5 @@
 package com.example.whatsapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,13 +10,22 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class UsersActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, Runnable{
@@ -39,6 +45,46 @@ public class UsersActivity extends AppCompatActivity implements AdapterView.OnIt
         ListView usersListView = findViewById(R.id.usersListView);
         usersListView.setOnItemClickListener(this);
         usersListView.setAdapter(adapter);
+
+        // Testing ---------------------------------------------
+        usersListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                ParseQuery<Chat> chatQuery = ParseQuery.getQuery(Chat.class);
+                chatQuery.whereContainsAll("members", Arrays.asList(ParseUser.getCurrentUser().getUsername(), usernames.get(position)));
+                chatQuery.findInBackground(new FindCallback<Chat>() {
+                    @Override
+                    public void done(final List<Chat> chats, ParseException e) {
+                        if (e == null) {
+                            if (chats.size() == 1) {
+                                if (chats.get(0).getList("messages").size() > 0) {
+                                    List<Message> messages = chats.get(0).getList("messages");
+                                    ParseObject.deleteAllInBackground(messages, new DeleteCallback() {
+                                        @Override
+                                        public void done(ParseException e) {
+                                            if (e == null) {
+                                                List<Message> list = Collections.emptyList();
+                                                chats.get(0).put("messages", list);
+                                                chats.get(0).saveInBackground(new SaveCallback() {
+                                                    @Override
+                                                    public void done(ParseException e) {
+                                                        if (e == null) {
+                                                            Toast.makeText(getApplicationContext(), "Deleted successfully!", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }
+                });
+
+                return true;
+            }
+        });
 
         handler = new Handler();
     }

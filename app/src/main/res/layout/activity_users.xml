@@ -7,6 +7,8 @@
     android:background="@color/colorPrimary"
     tools:context=".UsersActivity">
 
+    <!--TODO Revamp layout for this activity-->
+
     <ListView
         android:id="@+id/usersListView"
         android:layout_width="0dp"
